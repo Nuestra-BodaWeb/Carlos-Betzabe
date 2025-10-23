@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <meta name="theme-color" content="#e7d9bd" />
+  <title>Invitación de boda</title>
+
+  <!-- Preconexión de fuentes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Parfumerie+Script&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Quattrocento&display=swap" rel="stylesheet">
+
+
+
+
+  <!-- Fuentes con swap -->
+  <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Quattrocento&display=swap" rel="stylesheet">
+
+  <!-- Preload de fondos críticos -->
+  <link rel="preload" as="image" href="../proyecto_invitacionBoda/lienzo.webp">
+  <link rel="preload" as="image" href="../proyecto_invitacionBoda/flores.webp">
+  <link rel="preload" as="image" href="../proyecto_invitacionBoda/imgcalendario.webp">
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="./index.css">
+
+  <!-- JS diferido -->
+  <script src="./index.js" defer></script>
+</head>
+<body>
+
+  <!-- Portada (imagen 1) -->
+  <section class="portada">
+    <div class="overlay">
+      <h1 class="novios" id="novios">Carlos &amp; Betzabe</h1>
+      <p class="sub" id="subtitulo">¡Nos casamos!</p>
+      <div class="audio-player" aria-label="Reproductor de música">
+  <button class="audio-btn" id="audioToggle" data-state="play" aria-label="Reproducir" title="Reproducir">
+    <!-- ícono play -->
+    <svg class="ico-play" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+      <path d="M8 5v14l11-7z" fill="currentColor"></path>
+    </svg>
+    <!-- ícono pausa -->
+    <svg class="ico-pause" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+      <path d="M6 5h4v14H6zM14 5h4v14h-4z" fill="currentColor"></path>
+    </svg>
+  </button>
+
+  <div class="audio-track" id="audioTrack" role="slider" aria-label="Progreso">
+    <div class="audio-progress" id="audioProgress"></div>
+  </div>
+
+  <span class="audio-time" id="audioTime">0:00</span>
+
+  <audio id="bgAudio" preload="metadata">
+    <!-- ajusta el nombre de archivo según el tuyo -->
+    <source src="../proyecto_invitacionBoda/musica.mp3" type="audio/mpeg">
+    <source src="../proyecto_invitacionBoda/musica.ogg" type="audio/ogg">
+  </audio>
+</div>
+    </div>
+  </section>
+
+  <!-- Contenido (fondo lienzo continuo) -->
+<section class="contenido">
+  <div class="wrap">
+    <!-- Contador -->
+    <div class="contador-box">
+      <div id="contador" class="contador">
+        <div class="time"><span class="num">82</span><span class="lab">DÍAS</span></div>
+        <div class="time"><span class="num">22</span><span class="lab">HORAS</span></div>
+        <div class="time"><span class="num">38</span><span class="lab">MINUTOS</span></div>
+        <div class="time"><span class="num">33</span><span class="lab">SEGUNDOS</span></div>
+      </div>
+    </div>
+
+    <!-- Calendario del mes del evento -->
+    <section class="calendario">
+      <div class="cal-wrap">
+        <div id="calendario" class="cal">
+          <!-- aquí renderizas tu calendario -->
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- 🌸 Flores decorativas -->
+  <img src="../proyecto_invitacionBoda/florcita.webp" alt="" class="flor-deco top-right">
+  
+</section> <!-- ✅ cierra .contenido aquí -->
+
+<!-- Nuestra Historia (sección separada) -->
+<section class="historia">
+  <div class="h-wrap">
+    <h2 class="h-title">Nuestra <span>Historia</span></h2>
+    <img src="../proyecto_invitacionBoda/descarga.webp" alt="Flor azul" class="flor-titulo">
+
+    <!-- 💑 Imagen entre el título y el texto -->
+    <div class="h-photo">
+      <img src="../proyecto_invitacionBoda/casados.webp" alt="Nosotros" class="foto-casados">
+    </div>
+
+    <div class="h-card">
+      <p>
+        Nos habíamos visto desde pequeños pero no fue hasta el 20 de Marzo cuando ambos
+        confesamos nuestro amor. Después de varios meses de amistad decidimos ser
+        enamorados con la bendición de nuestros padres. Inspirados por el amor y luego
+        de muchas citas, frappés, cines, altos y bajos decidimos dar este gran paso y nos
+        alegra compartir contigo este momento inolvidable para nosotros. Agradeciendo
+        primero a Dios quien es nuestra fortaleza en medio de las adversidades y el
+        centro de nuestra relación para que nuestro amor perdure en el tiempo.
+      </p>
+
+      <p class="h-verse">1 Corintios 13:4-8</p>
+
+    </div>
+  </div>
+</section>
+
+  <!-- Eventos -->
+  <section class="eventos">
+    <div class="event-wrap">
+
+      <!-- CEREMONIA -->
+      <article class="event-card">
+        <img class="event-icon" src="../proyecto_invitacionBoda/iglesia.webp" alt="Iglesia" loading="lazy" decoding="async">
+        <h3 class="event-title">CEREMONIA</h3>
+
+        <div class="event-meta">
+          <span class="label">HORA DE LLEGADA</span>
+          <span class="time">4:00 PM</span>
+        </div>
+
+        <p class="event-label">Dirección:</p>
+        <p class="event-address">C. Milton Numason 213, San Martín de Porres 15108</p>
+
+        <a class="event-map" href="https://maps.google.com/?q=C.%20Milton%20Numason%20213%20San%20Mart%C3%ADn%20de%20Porres%2015108" target="_blank" rel="noopener">
+          <img class="event-pin" src="../proyecto_invitacionBoda/ubi.webp" alt="Abrir en Google Maps" loading="lazy" decoding="async">
+          <small>Abrir ubicación</small>
+        </a>
+      </article>
+
+      <hr class="divisor-negro">
+
+
+      <!-- RECEPCIÓN -->
+      <article class="event-card">
+        <img class="event-icon" src="../proyecto_invitacionBoda/email.webp" alt="Recepción" loading="lazy" decoding="async">
+        <h3 class="event-title">RECEPCIÓN</h3>
+
+        <div class="event-meta">
+          <span class="label">HORA DE LLEGADA</span>
+          <span class="time">7:00 PM</span>
+        </div>
+
+        <p class="event-label">Dirección:</p>
+        <p class="event-address">Asoc, San Martín de Porres 15109 – Carlos Izaguirre
+         Referencia: Cruce av. Carlos Izaguirre con av. 12 de octubre
+        </p>
+
+        <a class="event-map" href="https://maps.app.goo.gl/gQawV2yker9xR5JV8" target="_blank" rel="noopener">
+          <img class="event-pin" src="../proyecto_invitacionBoda/ubi.webp" alt="Abrir en Google Maps" loading="lazy" decoding="async">
+          <small>Abrir ubicación</small>
+        </a>
+<div class="flor-divider flor-a" aria-hidden="true"> <img src="../proyecto_invitacionBoda/cadenaDeFlores.png" alt="Flor decorativa" class="flor-linea"></div>
+
+
+      </article>
+
+
+      <article class="dresscode-card">
+  <h3 class="dresscode-title">Código de Vestimenta</h3>
+
+  <p class="dresscode-text">
+    Viste formal elegante para celebrar este día importante con nosotros.
+    Agradeceríamos que coincidan con nuestra paleta de colores. En vestidos,
+    elige algo no tan corto para sentirte cómoda y bailar toda la noche.
+    Lo más importante es disfrutar todos juntos.
+  </p>
+
+  <ul class="palette">
+    <li class="swatch" style="--c:#aebbe6"></li>
+    <li class="swatch" style="--c:#9b7aa7"></li>
+    <li class="swatch" style="--c:#e8a3d4"></li>
+    <li class="swatch" style="--c:#2737d8"></li>
+    <li class="swatch" style="--c:#bfe8f4"></li>
+  </ul>
+
+  <p class="dresscode-note">
+    Has click en el siguiente icono para inspiraciones de Pinterest hechas para ustedes.
+  </p>
+
+  <!-- Solo el ícono (Bootstrap Icons) -->
+  <a class="pin-icon-link"
+     href="https://www.pinterest.com/betzaberebecat/codigo-de-vestimenta/?invite_code=7df82b4a4fa44036b8289759171caa7b&sender=1079527110588262313"
+     target="_blank" rel="noopener" aria-label="Inspiraciones en Pinterest">
+    <i class="bi bi-pinterest"></i>
+  </a>
+</article>
+
+ 
+    </div>
+  </section>
+
+  <!-- DETALLES IMPORTANTES (estilo Historia, fondo flores3) -->
+<section class="detalles">
+  <div class="d-wrap">
+    <h2 class="d-title">Detalles importantes</h2>
+
+    <div class="d-card">
+      <ul class="d-list">
+        <li>La invitación es válida solo para la persona invitada; no llevar acompañante.</li>
+        <li>No se permite el ingreso de niños a la recepción ni bebés.</li>
+        <li>Recomendamos llegar puntual para no perderte nada del evento y evitar interrumpir.</li>
+        <li>Ya que somos una pareja joven, les animamos a traer un regalo. Puede ser en efectivo o en especie</li>
+        <li>Al ingresar, mostrar tu invitación.</li>
+        <li>Si confirmaste asistencia y te surge algún inconveniente, avísanos a la brevedad.</li>
+        <li>No publicar fotos del evento hasta el día siguiente; queremos ser los primeros.</li>
+        <li>Agradecemos su comprensión para cumplir con nuestros requisitos; lo más importante es que disfruten este día con nosotros.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="aportes">
+  <h2 class="a-title">Ayúdanos a construir nuestro futuro</h2>
+  <p class="a-intro">
+    Agradecemos tu presencia en nuestra boda; tenerte ahí es un regalo invaluable.
+    Si deseas dejarnos un obsequio, puedes escanear cualquiera de los códigos o usar las cuentas que detallamos abajo.
+    ¡Gracias de corazón!
+  </p>
+
+  <div class="a-qrs">
+    <!-- Betzabe / Interbank -->
+    <div class="qr-card">
+      <p class="qr-name">Plin · Betzabe Trasmonte Ramírez</p>
+      <img class="qr-img" src="../proyecto_invitacionBoda/interbank-bet.webp" alt="QR Plin Betzabe">
+      <div class="cuentas-inline">
+        <p class="cu-bank">Interbank (Soles) · Cuenta Simple</p>
+        <p class="cu-num">898 344652401</p>
+        <p class="cu-bank">Interbank (CCI)</p>
+        <p class="cu-num">00398001344652401249</p>
+      </div>
+    </div>
+
+    <!-- Carlos / BCP -->
+    <div class="qr-card">
+      <p class="qr-name">Yape · Carlos Morales Rebaza</p>
+      <img class="qr-img" src="../proyecto_invitacionBoda/yape-carlos.webp" alt="QR Yape Carlos">
+      <div class="cuentas-inline">
+        <p class="cu-bank">BCP (Soles)</p>
+        <p class="cu-num">19792889950404</p>
+        <p class="cu-bank">BCP (CCI)</p>
+        <p class="cu-num">00219192889650504555</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 🌸 Solo una flor izquierda -->
+  <img src="../proyecto_invitacionBoda/florcita-yape.webp" alt="" class="flor-aportes flor-left">
+</section>
+
+
+<!-- ================= RSVP ================= -->
+<section class="rsvp">
+  <div class="rsvp-inner">
+    <h2 class="rsvp-title">Confirmación de asistencia</h2>
+
+    <p class="rsvp-text">
+      Estamos muy emocionados por compartir contigo un día tan especial: ¡nuestra boda!
+      Por favor, confirma tu asistencia.
+    </p>
+
+    <a class="rsvp-btn"
+       href="https://docs.google.com/forms/d/e/1FAIpQLSficRxdJ0ZjnMOJH2XzrLJu8j38S2OTK374d481ZixU-gotVQ/viewform"
+       target="_blank" rel="noopener">
+      Confirmar aquí
+    </a>
+
+    <h3 class="rsvp-sub">Contáctanos</h3>
+    <p class="rsvp-hint">Para cualquier duda, contáctanos</p>
+
+    <ul class="contact-list">
+      <li class="contact-item">
+        <img class="ico-email" src="../proyecto_invitacionBoda/email.webp" alt="Email">
+        <span class="contact-role">Novio</span>
+        <i class="bi bi-telephone ico-tel" aria-hidden="true"></i>
+        <a class="contact-phone" href="tel:966658207">966 658 207</a>
+      </li>
+      <li class="contact-item">
+        <img class="ico-email" src="../proyecto_invitacionBoda/email.webp" alt="Email">
+        <span class="contact-role">Novia</span>
+        <i class="bi bi-telephone ico-tel" aria-hidden="true"></i>
+        <a class="contact-phone" href="tel:921046115">921 046 115</a>
+      </li>
+    </ul>
+  </div>
+</section>
+
+
+
+<script>
+  // Fija --vh al alto real del viewport (funciona iOS/Android)
+  (function(){
+    function applyVH(){
+      var vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--vh', vh + 'px');
+    }
+    applyVH();
+    window.addEventListener('resize', applyVH, {passive:true});
+    window.addEventListener('orientationchange', applyVH, {passive:true});
+    setTimeout(applyVH, 300); // algunos navegadores actualizan tarde
+  })();
+</script>
+
+
+
+</body>
+</html>

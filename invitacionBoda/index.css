@@ -1,0 +1,1016 @@
+:root{
+  --bg:#fff8fb;
+  --ink:#2a2230;
+  --muted:#6e6470;
+  --ring:#f5ccd9;
+}
+
+*{box-sizing:border-box;}
+html,body{height:100%;}
+body{
+  margin:0;
+  font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  color:var(--ink);
+  background:var(--bg);
+  -webkit-font-smoothing:antialiased;
+  background-color:#e7d9bd; /* evita flash blanco */
+
+  /* ===== Fondo global continuo (añadido) ===== */
+  background-image:url("../proyecto_invitacionBoda/lienzo.webp");
+  background-repeat:repeat;
+  background-size:520px auto;
+}
+
+/* ===== Render diferido ===== */
+/* Quitamos .contenido para evitar el “bloque oscuro” al posponer el pintado */
+.historia,.eventos{
+  content-visibility:auto;
+  contain-intrinsic-size:800px;
+}
+/* Forzamos .contenido a pintarse siempre */
+.contenido{content-visibility:visible!important}
+
+/* ===== Portada ===== */
+.portada{
+  position:relative;
+  height:100vh;
+  /* webp + fallback correcto (sin coma final) */
+  background-image: image-set(
+    url("../proyecto_invitacionBoda/flores.webp") type("image/webp"),
+    url("../proyecto_invitacionBoda/flores.jpg") type("image/jpeg")
+  );
+  background-position:center;
+  background-size:cover;
+  background-repeat:no-repeat;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  overflow:hidden;
+  padding-bottom:60px;
+}
+.portada::before{
+  content:"";
+  position:absolute;inset:0;
+  background:rgba(0,0,0,.45);
+  z-index:0;
+}
+.portada::after{
+  content:"";
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(0,0,0,.6),transparent 60%);
+  z-index:0;
+}
+.novios,.sub{
+  position:relative;z-index:1;color:#fff;
+  opacity:0;transform:translateY(10px);
+  animation:fadeInUp 1.6s ease forwards;
+}
+.novios{
+  margin:0;font-family:'Pinyon Script',cursive;
+  font-size:56px;letter-spacing:1px;animation-delay:.2s;
+}
+.sub{
+  font-family:'Quattrocento',serif;font-size:24px;
+  letter-spacing:1px;margin-top:10px;font-weight:400;
+  text-shadow:0 2px 6px rgba(0,0,0,.3);animation-delay:.6s;
+}
+@keyframes fadeInUp{to{opacity:1;transform:translateY(0);}}
+@media(prefers-reduced-motion:reduce){
+  .novios,.sub{animation:none!important;opacity:1;transform:none;}
+}
+
+
+
+
+
+
+/* bloque centrado bajo el subtítulo, sin pegarse demasiado */
+.portada .audio-player{
+  position:relative;
+  z-index:1;
+  margin-top:18px;                 /* separa de “¡Nos casamos!” */
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  color:#fff;
+  text-shadow:0 1px 3px rgba(0,0,0,.25);
+}
+
+/* botón redondo tipo “glass” */
+.audio-btn{
+  width:46px; height:46px; border-radius:999px;
+  display:grid; place-items:center;
+  color:#fff; background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.35);
+  backdrop-filter: blur(4px);
+  box-shadow:0 6px 16px rgba(0,0,0,.25) inset, 0 2px 8px rgba(0,0,0,.25);
+  cursor:pointer;
+  transition:transform .15s ease, background .15s ease;
+}
+.audio-btn:hover{ transform:scale(1.04); background:rgba(255,255,255,.18); }
+.audio-btn .ico-pause{ display:none; }
+.audio-btn[data-state="pause"] .ico-play{ display:none; }
+.audio-btn[data-state="pause"] .ico-pause{ display:block; }
+
+/* barra fina */
+.audio-track{
+  width:clamp(200px, 42vw, 340px);
+  height:4px; border-radius:999px; overflow:hidden;
+  background:rgba(255,255,255,.35);
+  box-shadow:0 1px 2px rgba(0,0,0,.25) inset;
+  cursor:pointer;
+}
+.audio-progress{
+  height:100%; width:0%;
+  background:linear-gradient(90deg,#fff,#e6e0d6);
+}
+
+/* tiempo */
+.audio-time{ font: 400 13px/1.2 'Quattrocento', serif; opacity:.95; }
+
+/* respeta reducción de movimiento */
+@media (prefers-reduced-motion:reduce){
+  .audio-btn{ transition:none; }
+}
+
+
+
+
+
+
+
+
+/* ===== Contenido ===== */
+.contenido{
+  background-image: image-set(
+    url("../proyecto_invitacionBoda/lienzo.webp") type("image/webp"),
+    url("../proyecto_invitacionBoda/lienzo.jpg") type("image/jpeg")
+  );
+  background-position:center top;
+  background-size:cover;
+  background-repeat:repeat-y;
+  position:relative; z-index:0;
+  background-color:#e7d9bd;
+
+  /* Aísla la sección para que nada de arriba se superponga */
+  isolation:isolate;
+}
+.wrap{max-width:430px;margin:0 auto;padding:28px 16px 60px;}
+
+/* ===== Contador ===== */
+.contador-box{margin:10px auto 24px;}
+.contador{
+  display:flex;gap:10px;justify-content:center;align-items:stretch;
+  padding:14px 16px;
+  background:rgba(232,215,185,.75);
+  border-radius:18px;border:1px solid rgba(140,110,75,.15);
+  box-shadow:0 4px 14px rgba(120,90,60,.15);
+  backdrop-filter:blur(6px);
+}
+.time{text-align:center;min-width:68px;}
+.time .num{
+  display:block;font-size:44px;font-weight:700;line-height:1;color:#2f2720;
+}
+.time .lab{
+  display:block;font-size:11px;letter-spacing:1px;color:#6a5b4b;margin-top:6px;
+}
+.time:last-child .num{color:#c93434;text-shadow:0 0 4px rgba(0,0,0,.15);}
+
+/* ===== Calendario ===== */
+.calendario{
+  position:relative; padding:26px 16px 46px;
+  background-image: image-set(
+    url("../proyecto_invitacionBoda/imgcalendario.webp") type("image/webp"),
+    url("../proyecto_invitacionBoda/imgcalendario.jpg") type("image/jpeg")
+  );
+  background-position:center;
+  background-size:cover;
+  color:#fff; text-align:center;
+}
+.calendario::before{
+  content:"";position:absolute;inset:0;background:rgba(0,0,0,.45);z-index:0;
+}
+.cal-wrap{position:relative;z-index:1;max-width:430px;margin:0 auto;}
+.cal-head{
+  display:flex;align-items:baseline;justify-content:center;gap:10px;
+  margin-bottom:12px;
+}
+.cal-month{
+  font-family:'Quattrocento',serif;font-size:28px;letter-spacing:2px;text-transform:uppercase;
+}
+.cal-year{
+  font-family:'Pinyon Script',cursive;font-size:26px;opacity:.9;
+}
+.cal-grid{
+  display:grid;grid-template-columns:repeat(7,1fr);
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.35);
+  border-radius:10px;overflow:hidden;
+}
+.cell{padding:10px 6px;
+  border-right:1px solid rgba(255,255,255,.25);
+  border-bottom:1px solid rgba(255,255,255,.25);
+}
+.cell:nth-child(7n){border-right:none;}
+.cell.head{font-size:12px;letter-spacing:1px;opacity:.9;font-weight:600;}
+.cell.day{font-size:16px;}
+.cell.day.highlight{background:rgba(255,255,255,.85);color:#222;font-weight:700;}
+
+/* ===== Flores decorativas ===== */
+.flor-deco{
+  position:absolute;
+  width:60px;
+  height:auto;
+  z-index:2;
+  opacity:0.9;
+  pointer-events:none;
+}
+.flor-deco.top-right{
+  top:10px; right:14px;
+  transform:rotate(12deg);
+}
+.flor-deco.bottom-left{
+  bottom:10px; left:14px;
+  transform:rotate(-15deg);
+}
+/* Si quieres agregar más (por ejemplo arriba izq o abajo der) puedes duplicar:
+.flor-deco.top-left{ top:10px; left:14px; transform:rotate(-8deg); }
+.flor-deco.bottom-right{ bottom:10px; right:14px; transform:rotate(10deg); }
+*/
+
+/* ===== Historia ===== */
+.historia{
+  position:relative;
+  background-image: image-set(
+    url("../proyecto_invitacionBoda/flores2.webp") type("image/webp"),
+    url("../proyecto_invitacionBoda/flores2.jpg") type("image/jpeg")
+  );
+  background-position:center; background-size:cover;
+  padding:56px 18px 78px; color:#fff; overflow:hidden;
+  background-color:#000;
+}
+.historia::before{content:"";position:absolute;inset:0;background:rgba(0,0,0,.45);z-index:0;}
+.historia::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:60px;
+  background:linear-gradient(to bottom,transparent,rgba(0,0,0,.35));z-index:0;
+}
+.h-wrap{max-width:920px;margin-inline:auto;position:relative;z-index:1;}
+.h-title{
+  margin:0 0 18px;text-align:center;
+  font-family:'Pinyon Script',cursive;font-weight:400;line-height:1;
+  font-size:clamp(44px,6vw,84px);color:#fff;
+  text-shadow:0 2px 10px rgba(0,0,0,.45);
+  position:relative;white-space:nowrap;
+}
+.h-title span{display:inline;}
+.h-title::after{
+  content:"";display:block;width:min(240px,40vw);height:1px;
+  margin:14px auto 0;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.6),transparent);
+  opacity:.95;
+}
+.h-card{
+  max-width: 960px;
+  margin: 18px auto 0;
+  padding: clamp(20px,5vw,28px) clamp(18px,4.6vw,26px);
+  background: rgba(255,255,255,0.074);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 20px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+  transition: background .3s ease, box-shadow .3s ease;                               /* sin animación */
+}
+.h-card:hover{
+  box-shadow: 0 8px 22px rgba(0,0,0,.28);
+}
+.h-card p{
+  margin:0 0 10px;font-family:'Quattrocento',serif;
+  font-size:clamp(16px,2.7vw,18px);line-height:1.9;letter-spacing:.1px;
+  text-align:justify;color:#e4dede;
+}
+.h-verse{
+  display:flex;justify-content:center;align-items:center;text-align:center;
+  margin-top:24px;margin-bottom:4px;
+  font-family:'Quattrocento',serif;font-size:14.5px;letter-spacing:1.6px;
+  color:#1b1917;font-weight:500;opacity:.95;text-transform:uppercase;
+}
+@media(max-width:480px){
+  .h-card{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:rgba(107, 104, 104, 0.55);}
+}
+@media(min-width:900px){
+  .historia{padding:66px 18px 96px;}
+  .h-card{padding:28px 28px;}
+}
+
+/* ===== Imagen entre título y texto ===== */
+.h-photo{
+  display:flex;
+  justify-content:center;
+  margin:20px 0 10px;
+  position:relative;
+  z-index:1;
+}
+.foto-casados{
+  width:180px;               /* tamaño pequeño y elegante */
+  height:auto;
+  border-radius:14px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.35);
+  border:2px solid rgba(255,255,255,0.35);
+  object-fit:cover;
+  opacity:0.95;
+  transition:transform .3s ease;
+}
+.foto-casados:hover{ transform:scale(1.03); }
+
+
+
+/* ===== Flor azul junto al título "Historia" (ajustada más a la derecha) ===== */
+.flor-titulo {
+  position: absolute;
+  top: 10px;                /* alineada con el texto */
+  right: 13%;              /* ← antes 22%, ahora más a la derecha */
+  width: 64px;
+  height: auto;
+  opacity: 0.9;
+  transform: rotate(10deg);
+  pointer-events: none;
+  z-index: 2;
+}
+
+@media (max-width: 480px) {
+  .flor-titulo {
+    right: 2%;             /* también más al borde en móvil */
+    width: 48px;
+    top: -4px;
+  }
+}
+
+
+
+/* ✅ Forzar que todo quede más junto debajo de "Abrir ubicación" */
+
+/* 1) El enlace de mapa con menos aire */
+.event-card .event-map{
+  margin-top: 2px !important;
+  margin-bottom: 4px !important;
+}
+
+/* 2) La línea divisora, fina y muy pegada */
+hr.divisor-negro{
+  height: 1.5px !important;
+  margin: 6px auto 8px !important;   /* MUY poca separación */
+  opacity: .85 !important;
+  width: 72% !important;              /* opcional */
+}
+
+/* 3) Reducir el espacio del grid entre tarjetas */
+.event-wrap{
+  row-gap: 18px !important;           /* antes 48px */
+  gap: 18px !important;
+}
+
+/* 4) Subir la carta que viene tras la línea */
+hr.divisor-negro + .event-card{
+  margin-top: -16px !important;       /* súbela; prueba -18px o -20px si quieres más */
+  padding-top: 6px !important;        /* menos aire dentro */
+}
+
+/* 5) El título de esa carta, todavía más arriba */
+hr.divisor-negro + .event-card .event-title{
+  margin-top: 0 !important;
+}
+
+/* 6) Margen inferior general de cada tarjeta, mínimo */
+.event-card{
+  margin-bottom: 6px !important;
+  padding-top: 10px !important;
+}
+
+
+
+
+/* Asegura que .eventos tenga posición relativa para contenerlas */
+.eventos{position:relative;}
+.eventos{
+  background-image: image-set(
+    url("../proyecto_invitacionBoda/lienzo.webp") type("image/webp"),
+    url("../proyecto_invitacionBoda/lienzo.jpg") type("image/jpeg")
+  );
+  background-position:center top;
+  background-size:cover;
+  background-repeat:repeat-y;
+  padding:48px 16px 64px;
+  color:#3a2f25;
+  background-color:#e7d9bd;
+}
+.event-wrap{
+  max-width:960px;margin:0 auto;
+  display:grid;grid-template-columns:1fr;gap:48px;
+}
+@media(min-width:880px){
+  .event-wrap{grid-template-columns:1fr 1fr;gap:56px;}
+}
+
+.event-card{text-align:center;padding:12px 10px 0;}
+.event-icon,.event-pin{
+  width:64px;height:64px;object-fit:contain;opacity:1;margin-bottom:8px;
+}
+.event-title{
+  font-family:'Quattrocento',serif;letter-spacing:1.5px;font-size:22px;
+  font-weight:700;margin:6px 0 18px;color:#3a2f25;text-transform:uppercase;
+}
+.event-meta{
+  display:flex;align-items:center;justify-content:center;gap:12px;
+  position:relative;margin:0 auto 18px;max-width:360px;
+  color:#2f2720;font-family:'Quattrocento',serif;
+  font-size:15px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;
+}
+.event-meta::before,.event-meta::after{
+  content:"";flex:1;height:1px;
+  background:repeating-linear-gradient(90deg,rgba(0,0,0,.35) 0 6px,transparent 6px 11px);
+}
+.event-meta::before{margin-right:10px;}
+.event-meta::after{margin-left:10px;}
+.event-meta .label{color:#2a1e17;font-weight:700;}
+.event-meta .time{font-size:16px;font-weight:700;color:#1e150f;letter-spacing:.5px;}
+.event-label{
+  margin:10px auto 4px;font-size:14px;color:#3a2f25;
+  font-weight:700;text-transform:uppercase;letter-spacing:.7px;
+}
+.event-address{
+  margin:0 auto 14px;font-family:'Quattrocento',serif;
+  font-size:15.5px;font-weight:600;max-width:440px;line-height:1.65;color:#3a2f25;
+}
+.event-map{
+  display:inline-flex;flex-direction:column;align-items:center;gap:6px;
+  text-decoration:none;color:#2f2720;margin:6px 0 0;
+}
+.event-map small{font-size:12.5px;letter-spacing:.4px;color:#2f2720;}
+@media(min-width:431px){
+  .wrap{padding-top:36px;padding-bottom:100px;}
+}
+
+/* Acerca más el bloque al "Abrir ubicación" de arriba */
+.event-card { margin-bottom: 12px; }       /* si ya existe, reduce el valor */
+.dresscode-card {
+  margin: 10px auto 15px;
+  padding: 18px 16px;
+  max-width: 760px;
+  text-align: center;
+  background: transparent;
+  border: none;
+}
+
+/* Título más grande y más marcado (Parfumerie es light; simulamos “más negrito”) */
+.dresscode-title{
+  font-family: 'Parfumerie Script','Pinyon Script',cursive;
+  font-size: 34px;
+  color: #3b2b21;
+  letter-spacing: .02em;
+  margin: 6px 0 8px;
+  text-shadow: 0 .2px 0 #3b2b21, 0 0 .3px #3b2b21; /* truco para darle cuerpo */
+}
+
+/* Texto con más contraste y un pelín más grande */
+.dresscode-text{
+  font-family: 'Quattrocento', serif;
+  font-size: 16.5px;
+  line-height: 1.72;
+  color: #3b2b21;
+  font-weight: 600;
+  margin: 0 auto 14px;
+  max-width: 52ch;
+}
+
+/* Paleta sin borde, solo color */
+.palette{
+  display: flex; justify-content: center; gap: 12px;
+  list-style: none; padding: 0; margin: 8px 0 10px;
+}
+.swatch{ width: 48px; height: 48px; border-radius: 50%; background: var(--c); border: none; }
+
+.dresscode-note {
+  font-size: 15px;
+  color: #3b2b21;
+  font-weight: 700;
+  margin: 16px 0 16px;
+  line-height: 1.6;
+}
+
+/* Ícono Pinterest GRANDE y elegante */
+.pin-icon-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 90px !important;
+  height: 90px !important;
+  border-radius: 50%;
+  color: #5a4638;
+  background: transparent;
+  text-decoration: none;
+  margin-top: 16px;
+  transition: transform 0.25s ease, color 0.25s ease;
+}
+.pin-icon-link i { font-size: 70px !important; line-height: 1; }
+.pin-icon-link:hover { color: #3b2b21; transform: scale(1.08); }
+
+/* Opcional: en pantallas más grandes separa un poquito más */
+@media (min-width: 768px){
+  .dresscode-card{ margin-top: 12px; padding: 20px 18px; }
+  .dresscode-title{ font-size: 36px; }
+}
+
+/* === ✅ CENTRADO Y ESCALADO UNIVERSAL PARA MÓVILES === */
+
+/* Asegura centrado global */
+.eventos,
+.event-wrap,
+.event-card,
+.dresscode-card {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Evita desbordes horizontales en celulares angostos */
+.eventos, .event-wrap {
+  width: 100%;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+/* Reduce progresivamente tamaños de texto e íconos */
+@media (max-width: 520px) {
+  .event-title { font-size: 19px; }
+  .event-meta { font-size: 13.5px; }
+  .event-address { font-size: 14px; line-height: 1.55; max-width: 90%; }
+  .event-label { font-size: 13px; }
+  .event-map small { font-size: 12px; }
+
+  .dresscode-title { font-size: 30px; }
+  .dresscode-text { font-size: 15px; line-height: 1.6; max-width: 90%; }
+  .dresscode-note { font-size: 14px; }
+
+  .event-icon, .event-pin { width: 54px; height: 54px; }
+  .swatch { width: 42px; height: 42px; }
+}
+
+/* Para pantallas muy pequeñas (A20, iPhone SE, etc.) */
+@media (max-width: 380px) {
+  .event-title { font-size: 17px; }
+  .event-meta { font-size: 12.5px; gap: 8px; }
+  .event-address { font-size: 13px; line-height: 1.5; }
+  .dresscode-title { font-size: 26px; }
+  .dresscode-text { font-size: 14px; }
+  .dresscode-note { font-size: 13px; }
+  .event-icon, .event-pin { width: 48px; height: 48px; }
+  .swatch { width: 34px; height: 34px; }
+}
+
+/* Centrado perfecto de ícono Pinterest y elementos decorativos */
+.pin-icon-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Elimina cualquier desfase lateral que puedan generar márgenes */
+.event-card > * {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+
+
+
+
+
+
+/* ===== Detalles importantes (estilo Historia) ===== */
+.detalles{
+  position: relative;
+  background-image: image-set(
+    url("../proyecto_invitacionBoda/flores3.webp") type("image/webp"),
+    url("../proyecto_invitacionBoda/flores3.jpg") type("image/jpeg")
+  );
+  background-position: center;
+  background-size: cover;
+  padding: 56px 18px 78px;
+  color: #fff;
+  overflow: hidden;
+  background-color: #000; /* fallback */
+}
+.detalles::before{
+  content:"";
+  position:absolute; inset:0;
+  background: rgba(0,0,0,.45);
+  z-index:0;
+}
+.detalles::after{
+  content:"";
+  position:absolute; left:0; right:0; bottom:0; height:60px;
+  background: linear-gradient(to bottom, transparent, rgba(0,0,0,.35));
+  z-index:0;
+}
+.d-wrap{ max-width:920px; margin-inline:auto; position:relative; z-index:1; }
+
+/* Título cursivo con línea elegante (match .h-title) */
+.d-title{
+  margin: 0 0 18px;
+  text-align: center;
+  font-family: 'Pinyon Script', cursive;
+  font-weight: 400;
+  line-height: 1;
+  font-size: clamp(44px, 6vw, 84px);
+  color: #fff;
+  text-shadow: 0 2px 10px rgba(0,0,0,.45);
+  white-space: nowrap;
+  position: relative;
+}
+.d-title::after{
+  content:"";
+  display:block;
+  width: min(240px, 40vw);
+  height: 1px;
+  margin: 14px auto 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.6), transparent);
+  opacity: .95;
+}
+
+/* Tarjeta glassy (match .h-card) */
+.d-card{
+  max-width: 960px;
+  margin: 18px auto 0;
+  padding: clamp(20px,5vw,28px) clamp(18px,4.6vw,26px);
+  background: rgba(255,255,255,0.074);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 20px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+  transition: background .3s ease, box-shadow .3s ease;
+}
+.d-card:hover{ box-shadow: 0 8px 22px rgba(0,0,0,.28); }
+
+/* Lista de detalles: tipografía y separación elegantes */
+.d-list{
+  margin: 0; padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 12px;
+}
+.d-list li{
+  margin: 0;
+  font-family: 'Quattrocento', serif;
+  font-size: clamp(16px, 2.6vw, 18px);
+  line-height: 1.9;
+  letter-spacing: .1px;
+  color: #f0ecec;
+  text-align: center;
+}
+
+/* Respuesta a tamaños */
+@media (max-width: 480px){
+  .d-card{
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgba(107,104,104,0.55);
+  }
+}
+@media (min-width: 900px){
+  .detalles{ padding: 66px 18px 96px; }
+  .d-card{ padding: 28px 28px; }
+}
+
+/* ===== Sección APORTES / QR sin contenedores ===== */
+.aportes{
+  position: relative;
+  background: transparent;
+  padding: 46px 18px 58px;
+  color: #35281f;
+}
+.a-title{
+  margin: 0 0 14px;
+  text-align: center;
+  font-family: 'Parfumerie Script', 'Pinyon Script', cursive;
+  font-size: clamp(32px, 6.5vw, 58px);
+  line-height: 1.05;
+  color: #3a2a20;
+  font-weight: 600;
+  text-shadow: 0 .4px 0 #3a2a20, 0 0 .4px #3a2a20;
+}
+.a-intro{
+  text-align: center;
+  font-family: 'Quattrocento', serif;
+  font-size: 16px;
+  line-height: 1.8;
+  color: #3b2d23;
+  font-weight: 600;
+  max-width: 60ch;
+  margin: 10px auto 20px;
+}
+.a-qrs{
+  display: grid;
+  gap: 26px;
+  margin: 18px auto 28px;
+  text-align: center;
+  max-width: 640px;
+  justify-items: center;
+}
+.qr-card{
+  padding: 0;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  text-align: center;
+}
+.qr-name{ margin: 0 0 10px; text-align: center; }
+.qr-img{
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+  border-radius: 10px;
+  display: inline-block;
+}
+@media (min-width: 760px){
+  .a-qrs{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 900px;
+    justify-items: center;
+  }
+  .qr-img{ width: 210px; height: 210px; }
+}
+.a-cuentas{ padding-left: 24px; }
+.cu-title{
+  text-align: left;
+  font-family: 'Quattrocento', serif;
+  font-size: 17px;
+  color: #3b2b21;
+  font-weight: 800;
+  letter-spacing: .4px;
+  margin: 6px 0;
+}
+.cu-card{ background: transparent !important; border: none !important; box-shadow: none !important; padding: 0 !important; }
+.cu-bank{
+  margin: 2px 0 2px;
+  font-family: 'Quattrocento', serif;
+  font-size: 15px;
+  color: #3a2c22;
+  font-weight: 800;
+}
+.cu-num{
+  margin: 0 0 6px;
+  font-family: 'Quattrocento', serif;
+  font-size: 16px;
+  color: #3b2b21;
+  font-weight: 700;
+}
+.cuentas-inline{
+  margin-top: 10px;
+  text-align: center;
+  line-height: 1.6;
+}
+.cuentas-inline .cu-bank{
+  font-size: 15px;
+  color: #3a2c22;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+.cuentas-inline .cu-num{
+  font-size: 15px;
+  color: #3b2b21;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+/* ===== Flor decorativa inferior izquierda (más pequeña y al fondo) ===== */
+.flor-aportes {
+  position: absolute;
+  width: 150px;              /* 🌸 más pequeña para evitar pixelado */
+  height: auto;
+  opacity: 0.55;             /* más tenue para que quede detrás del texto */
+  pointer-events: none;
+  z-index: -1;               /* 🔹 detrás de las letras */
+  filter: blur(0.4px) brightness(1.05); /* suaviza bordes */
+}
+
+/* Solo flor izquierda, pegada abajo */
+.flor-left {
+  bottom: -8px;              /* casi al ras del borde inferior */
+  left: -10px;
+  transform: rotate(-4deg) scale(1.1);
+}
+
+/* Versión móvil */
+@media (max-width: 480px) {
+  .flor-aportes {
+    width: 120px;
+    opacity: 0.5;
+  }
+  .flor-left {
+    bottom: -6px;
+    left: -8px;
+  }
+}
+
+
+
+
+/* ===== RSVP – mismo diseño, más aire entre bloques ===== */
+.rsvp{
+  position: relative;
+  padding: 110px 18px 160px;          /* +espacio arriba/abajo */
+  min-height: 95vh;                   /* un poco más larga */
+  color:#fff;
+  overflow:hidden;
+  background-image: image-set(
+    url("../proyecto_invitacionBoda/flores2.webp") type("image/webp"),
+    url("../proyecto_invitacionBoda/flores2.jpg") type("image/jpeg")
+  );
+  background-position:center top;
+  background-size:cover;
+  background-repeat:no-repeat;
+}
+.rsvp::before{
+  content:""; position:absolute; inset:0;
+  background: linear-gradient(to bottom, rgba(0,0,0,.45), rgba(0,0,0,.55));
+  z-index:0;
+}
+.rsvp-inner{
+  position:relative; z-index:1;
+  max-width:860px; margin:0 auto;
+  padding:0 14px;
+}
+
+/* Título con más aire arriba/abajo */
+.rsvp-title{
+  margin:0 0 24px;
+  text-align:center;
+  font-family:'Pinyon Script',cursive;
+  font-size:clamp(36px,6.4vw,66px);
+  font-weight:400;
+  line-height:1.06;
+  letter-spacing:.2px;
+  text-shadow:0 1.5px 7px rgba(0,0,0,.35);
+  white-space:nowrap;
+}
+.rsvp-title::after{
+  content:"";
+  display:block;
+  width:min(240px,40vw);
+  height:1px;
+  margin:20px auto 0;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.6),transparent);
+}
+
+/* Texto con más separación del título y del botón */
+.rsvp-text{
+  max-width:62ch;
+  margin:24px auto 42px;
+  text-align:center;
+  font-family:'Quattrocento',serif;
+  font-size:16.5px;
+  line-height:2;
+  letter-spacing:.1px;
+  color:#f2efee;
+  font-weight:500;
+}
+
+/* Botón centrado con más aire debajo */
+.rsvp-btn{
+  display:block;
+  width:max-content;
+  margin:0 auto 64px;
+  padding:14px 26px;
+  border-radius:28px;
+  border:1.6px solid rgba(255,255,255,.85);
+  color:#fff;
+  text-decoration:none;
+  font-family:'Quattrocento',serif;
+  font-weight:700;
+  letter-spacing:.6px;
+  background:transparent;
+  backdrop-filter:blur(2px);
+  transition:background .2s ease, transform .15s ease;
+}
+.rsvp-btn:hover{ background:rgba(255,255,255,.14); transform:translateY(-1px); }
+
+/* Subtítulo + texto contacto más abajo */
+.rsvp-sub{
+  margin:24px 0 6px;
+  text-align:center;
+  font-family:'Pinyon Script',cursive;
+  font-size:clamp(26px,4.8vw,38px);
+  text-shadow:0 1px 6px rgba(0,0,0,.35);
+}
+.rsvp-hint{
+  margin:0 0 30px;
+  text-align:center;
+  font-family:'Quattrocento',serif;
+  font-size:14.5px;
+  color:#efecec;
+}
+
+/* Contactos con más separación vertical */
+.contact-list{
+  list-style:none;
+  margin:0 auto;
+  padding:0;
+  max-width:640px;
+  display:grid;
+  gap:26px;
+}
+/* ===== Ajuste fino: línea centrada entre contactos ===== */
+.contact-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 22px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+.contact-item:last-child {
+  border-bottom: none;
+  padding-bottom: 12px;
+}
+.ico-email{ width:26px; height:26px; object-fit:contain; filter:brightness(0) invert(1); }
+.ico-tel{ font-size:20px; color:#fff; }
+.contact-role{
+  font-family:'Quattrocento',serif;
+  font-size:15px;
+  color:#f1efef;
+  font-weight:600;
+}
+.contact-phone{
+  justify-self:start;
+  text-decoration:none;
+  color:#ffffff;
+  font-family:'Quattrocento',serif;
+  font-size:16px;
+  font-weight:600;
+}
+
+/* Desktop aún más aireado */
+@media (min-width:900px){
+  .rsvp{ padding:120px 24px 200px; min-height:100vh; }
+  .contact-list{ gap:28px; }
+}
+
+/* === Anti-CLS para los títulos de la portada === */
+.portada .overlay{
+  min-height: 140px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.novios{
+  line-height: 1.10;
+  min-height: calc(56px * 1.10);
+  font-synthesis-weight: none;
+}
+.sub{
+  line-height: 1.40;
+  min-height: calc(24px * 1.40);
+}
+@supports (font-size-adjust: 1){
+  .novios{ font-size-adjust: 0.40; }
+  .sub{   font-size-adjust: 0.46; }
+}
+.novios,.sub{ will-change: opacity, transform; }
+
+
+/* que ocupe borde a borde del card */
+.event-card .flor-divider{
+  display:block;
+  width:calc(100% + 20px);
+  margin:12px -10px 0;   /* top 12px, laterales negativos = padding */
+  height:52px;           /* puedes bajar a 40/36 si la quieres más finita */
+  pointer-events:none;
+}
+
+/* ===== Línea decorativa negra entre secciones ===== */
+.divisor-negro {
+  display: block;
+  width: 70%;
+  max-width: 380px;
+  height: 2px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(0,0,0,0.8),
+    transparent
+  );
+  margin: 14px auto 22px; /* separaciones arriba y abajo */
+  border: none;
+  border-radius: 1px;
+  opacity: 0.8;
+}
